@@ -1,0 +1,43 @@
+home page
+* projects for the day and hours, tick if finished (possibility to tick projects of next days)
+* access to future scheduling, all future days
+* if finished time for project ask if you want to add more time
+
+the next days in case there were task not completed today ask if you want to
+reschedule them today (haven't complete the percentage of project required)
+
+adding projects
+* name
+* hours
+* deadline if any
+
+settings:
+* working hours each day, 0 if you don't want to work that day
+* ore per imprevisti, default 3
+* inserisci orario scolastico
+* inserisci vacanze scolastiche, per quanti di questi giorni intendi lavorare
+
+
+IMPLEMENTATION:
+
+csv file projects: id, name, registration date, hours, hours used, amount completed, computed deadline, actual hours, completed
+csv settings
+
+Project:
+    atributes
+    create projects
+    change specific attributes
+
+manager: list of projects
+    add project normally
+    add project with deadline
+    add time to project, check if other project respect the deadline
+
+settings:
+    read and change file for settings
+
+timeline:
+    has a manager
+    list of list, where each sublist is a day, takes settings into account
+
+
