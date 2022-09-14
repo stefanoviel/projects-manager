@@ -1,22 +1,24 @@
 {
     "working_days": {
-        "monday": 0,
-        "tuesday": 0,
-        "wednesday": 0,
-        "thursday": 0,
-        "friday": 0,
-        "saturday": 0,
-        "sunday": 0
+        "Monday": 7,
+        "Tuesday": 7,
+        "Wednesday": 7,
+        "Thursday": 7,
+        "Friday": 7,
+        "Saturday": 4,
+        "Sunday": 0
     },
     "school_days": {
-        "monday": 0,
-        "tuesday": 0,
-        "wednesday": 0,
-        "thursday": 0,
-        "friday": 0,
-        "saturday": 0,
-        "sunday": 0
+        "Monday": 5,
+        "Tuesday": 3,
+        "Wednesday": 5,
+        "Thursday": 1,
+        "Friday": 2,
+        "Saturday": 0,
+        "Sunday": 0
     },
     "school_hollidays": [],
-    "hollidays": [
+    "hollidays": [],
+    "extra_time": 80
+}
         
