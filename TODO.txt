@@ -11,6 +11,9 @@ adding projects
 * hours
 * deadline if any
 
+- if no deadline => add it in the last position
+- if deadline => finish it before the deadline with the extra time
+
 settings:
 * working hours each day, 0 if you don't want to work that day
 * ore per imprevisti, default 3
@@ -20,24 +23,29 @@ settings:
 
 IMPLEMENTATION:
 
-csv file projects: id, name, registration date, hours, hours used, amount completed, computed deadline, actual hours, completed
-csv settings
+csv file projects: id, name, start date, hours, hours used, estimated deadline, hard deadline
+serialization of list
+json settings
 
 Project:
     atributes
-    create projects
-    change specific attributes
+    create projects (attributes)
+    readProject (id) -> project object  
+    change deadline
+    change name..
 
-manager: list of projects
-    add project normally
-    add project with deadline
-    add time to project, check if other project respect the deadline
+Calender: 
+    hoursDay day -> free hours
+    Date (day, hour)
+    list [id, start (Date), end (Date) [soft dedaline], hard_dedaline, hoursdone]  x2 (to_complete, completed)
+    add project without deadline [just put it on the end]
+    add project with deadline (try all possible combination, search for the place that minimize sum hd - e)
+        if project cannot be added, ask to change setting
+    find_end (start n_hours ) -> end
+    update_due_setting_change
 
 settings:
     read and change file for settings
 
-timeline:
-    has a manager
-    list of list, where each sublist is a day, takes settings into account
 
 

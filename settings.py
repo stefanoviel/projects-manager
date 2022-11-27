@@ -9,15 +9,15 @@ class Settings:
         self.real_hours = {}
         with open('settings.json', 'r') as f:
             self.data = json.load(f)
-        self.computer_hours()
-        print(self.real_hours)
+        self.compute_availible_hours()
+        # print(self.real_hours)
 
-    def computer_hours(self):
+    def compute_availible_hours(self):
         for i in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']:
             self.real_hours[i] = self.data['working_days'][i] - self.data['school_days'][i]
 
     def update_json(self):
-        self.computer_hours()
+        # self.compute_availible_hours()  # why should I compute it if I'm not saving it?
         with open('settings.json', 'w') as f:
             json.dump(self.data, f, indent=4)
 
@@ -33,29 +33,21 @@ class Settings:
         self.data['hollidays'].append(date)
         self.update_json()
 
-    def new_deadline(self, data, hours: int):
-        date = datetime.strptime(data['last_day'], '%Y-%m-%d')
-        weekday = date.strftime('%A')
-        last_hour = data['last_hour']
-        if self.real_hours[weekday] < last_hour:
-            raise Exception("Hours used exceed the available ones")
+    def add_hours(self, hours:int, start_day:datetime, start_hour:int): 
+        weekday = start_day.strftime('%A') 
 
         while hours > 0:
-            if hours >= (self.real_hours[weekday] - last_hour):
+            if hours >= (self.real_hours[weekday] - start_hour):
                 # print(hours, self.real_hours[weekday], last_hour)
-                hours -= (self.real_hours[weekday] - last_hour)
-                date += dt.timedelta(days=1)
-                weekday = date.strftime('%A')
-                last_hour = 0
+                hours -= (self.real_hours[weekday] - start_hour)
+                start_day += dt.timedelta(days=1)
+                weekday = start_day.strftime('%A')
+                start_hour = 0
             else:
-                last_hour = self.real_hours[weekday] - hours
+                start_hour = self.real_hours[weekday] - hours
                 hours = 0
 
-        data['last_day'] = date.strftime('%Y-%m-%d')
-        data['last_hour'] = last_hour
-
-        return data
-
+        return start_day.strftime("%Y-%m-%d"), start_hour
 
 if __name__ == '__main__':
     s = Settings()
