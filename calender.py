@@ -86,15 +86,17 @@ class Calender:
 if __name__ == "__main__":
     calender = Calender()
     # p = Project('secondo', 70, hard_deadline_day='2022-12-10', hard_deadline_hour=3)
-    p = Project('terzo', 20)
-    calender.add_new_project(calender.projects, p)
-    p = Project('quarto', 100)
-    calender.add_new_project(calender.projects, p)
-    p = Project('a', 10)
-    calender.add_new_project(calender.projects, p)
-    p = Project('b', 80)
-    calender.add_new_project(calender.projects, p)
-    # calender.find_optimal_position(p)
+
+    # p = Project('terzo', 20)
+    # calender.add_new_project(calender.projects, p)
+    # p = Project('quarto', 100)
+    # calender.add_new_project(calender.projects, p)
+    # p = Project('a', 10)
+    # calender.add_new_project(calender.projects, p)
+    # p = Project('b', 80)
+    # calender.add_new_project(calender.projects, p)
+
+    calender.find_optimal_position(p)
 
 
 
