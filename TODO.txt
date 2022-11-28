@@ -34,6 +34,8 @@ Project:
     change deadline
     change name..
 
+    mark hours as completed
+
 Calender: 
     hoursDay day -> free hours
     Date (day, hour)
@@ -44,8 +46,22 @@ Calender:
     find_end (start n_hours ) -> end
     update_due_setting_change
 
+    change hours to be worked on a certain project (all estimated deadline must be recomputed)
+    handle when estimated deadline cross hard deadline, options: 
+        * work longer hours on the current project
+        * systematically add working hours
+        * change safegap so that it doesn't happen again in the future
+        
+
 settings:
     read and change file for settings
+
+cmd: 
+    add new project (with or without deadline)
+    check what to do today
+    mark how much has been done today (could be more or less than expected)
+
+
 
 
 

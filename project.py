@@ -21,7 +21,7 @@ class Project:
     @classmethod
     def create_from_datframe(cls, df: pd.DataFrame, index:int): 
         # print('passed df\n', df.name.iloc[index], df.hours.iloc[index], df.hours_used.iloc[index])
-        return cls(df.name.iloc[index], df.hours.iloc[index], df.hours_used.iloc[index])
+        return cls(df.name.iloc[index], df.hours.iloc[index], hours_used=df.hours_used.iloc[index], hard_deadline_day=df.hard_deadline_day.iloc[index], hard_deadline_hour=df.hard_deadline_hour.iloc[index])
 
     def to_dataframe(self): 
         l = [self.id, self.name, self.hours, self.hours_used, self.start_date, self.start_hour,  self.hard_deadline_day, self.hard_deadline_hour, self.estimated_day, self.estimated_hour]

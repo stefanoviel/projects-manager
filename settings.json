@@ -1,11 +1,11 @@
 {
     "working_days": {
-        "Monday": 7,
-        "Tuesday": 7,
-        "Wednesday": 7,
-        "Thursday": 7,
-        "Friday": 7,
-        "Saturday": 4,
+        "Monday": 10,
+        "Tuesday": 10,
+        "Wednesday": 10,
+        "Thursday": 10,
+        "Friday": 10,
+        "Saturday": 7,
         "Sunday": 0
     },
     "school_days": {

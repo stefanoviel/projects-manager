@@ -1,5 +1,6 @@
 from datetime import datetime
 import datetime as dt
+import pandas as pd
 import json
 
 
@@ -12,6 +13,7 @@ class Settings:
         self.compute_availible_hours()
         # print(self.real_hours)
 
+    # availible hours to work are computed by the total working hours each day - hours of school each day
     def compute_availible_hours(self):
         for i in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']:
             self.real_hours[i] = self.data['working_days'][i] - self.data['school_days'][i]
@@ -37,6 +39,7 @@ class Settings:
         weekday = start_day.strftime('%A') 
 
         while hours > 0:
+            # print(self.real_hours[weekday], hours, start_hour)
             if hours >= (self.real_hours[weekday] - start_hour):
                 # print(hours, self.real_hours[weekday], last_hour)
                 hours -= (self.real_hours[weekday] - start_hour)
@@ -44,11 +47,33 @@ class Settings:
                 weekday = start_day.strftime('%A')
                 start_hour = 0
             else:
-                start_hour = self.real_hours[weekday] - hours
+                start_hour = hours
                 hours = 0
 
+        # print(start_day.strftime("%Y-%m-%d"), start_hour)
         return start_day.strftime("%Y-%m-%d"), start_hour
+
+    def compute_remaining_hour_work(self, df : pd.DataFrame): 
+        remaining_hours = 0
+        for index, row in df.iterrows():
+            weekday = datetime.strptime(row.estimated_day, "%Y-%m-%d").strftime('%A')
+            remaining_hours += self.real_hours[weekday] - row.estimated_hour
+            
+        return remaining_hours
+
+    def compute_hours_between_days(self, day1:datetime, day2:datetime):  
+        hours = 0
+        while day1 < day2: 
+            weekday = day1.strftime('%A')
+            hours += self.real_hours[weekday] 
+            day1 += dt.timedelta(days=1)
+
+        return hours
+        
+
 
 if __name__ == '__main__':
     s = Settings()
+
+    print(s.compute_hours_between_days(datetime.strptime("2022-12-01", "%Y-%m-%d"), datetime.strptime("2022-12-8", "%Y-%m-%d")))
 
