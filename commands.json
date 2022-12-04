@@ -1,0 +1,7 @@
+{
+    "add_project": {
+        "n_parameters": 3,
+        "help": "add_project [number of hours] [optional day deadline, format YYYY-MM-DD]",
+        "function_name": "cmd_add_project"
+    }
+}

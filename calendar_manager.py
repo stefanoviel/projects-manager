@@ -9,7 +9,7 @@ from project import Project
 from settings import Settings
 
 
-class Calender:
+class Calendar:
 
     def __init__(self):
         self.projects = pd.read_csv('projects.csv') 
@@ -21,16 +21,16 @@ class Calender:
         self.projects.to_csv('projects.csv',index=False)
         self.completed.to_csv('completed.csv',index=False)
 
-    def last_day_hour(self, df: pd.DataFrame): 
+    def last_day_hour(self, df: pd.DataFrame, hours_already_worked=0): 
         if df.empty: 
-            return (dt.date.today() + dt.timedelta(days=1)).strftime("%Y-%m-%d"), 0
+            return dt.date.today().strftime("%Y-%m-%d"), hours_already_worked
         else: 
             return df.iloc[-1].estimated_day, df.iloc[-1].estimated_hour
 
     def add_new_project(self, df, project: Project, save:bool):
         last_day, last_hour = self.last_day_hour(df)
 
-        soft_day_deadline, soft_hour_deadline = self.settings.add_hours(project.hours, dt.datetime.strptime(last_day, "%Y-%m-%d"), last_hour)
+        soft_day_deadline, soft_hour_deadline = self.settings.add_hours(project.hours - project.hours_used, dt.datetime.strptime(last_day, "%Y-%m-%d"), last_hour)
         project.start_date = last_day
         project.start_hour = last_hour
         project.estimated_day = soft_day_deadline
@@ -61,7 +61,7 @@ class Calender:
         return hours_gap
 
     # try all position in the list of projects and return the one that reduces the safe_gap
-    def find_optimal_position(self, project): 
+    def add_project_optimal_position(self, project): 
         n_availible_positions = len(self.projects.loc[self.projects.start_date < project.hard_deadline_day]) 
         df = self.projects.copy()
 
@@ -88,15 +88,29 @@ class Calender:
         return df2
 
 
-    def recompute_deadline_setting_changed(): 
-        pass
+    def recompute_deadline_setting_changed(self,): 
+        df = pd.DataFrame()
+
+        for i in range(len(self.projects)): 
+            project = self.p.create_from_datframe(self.projects, i)
+            print(i, project.to_dataframe())
+            df = self.add_new_project(df, project, False)
+            if df is None: 
+                return None
+
+        self.projects = df
+        # self.update_projects()
+        return df   
+        
+        
 
     
 
 if __name__ == "__main__":
-    calender = Calender()
-    p = Project('secondo', 23, hard_deadline_day='2022-12-20', hard_deadline_hour=3)
-    print(calender.find_optimal_position(p))
+    calendar = Calendar()
+    # p = Project('secondo', 23, hard_deadline_day='2022-12-20', hard_deadline_hour=3)
+    # print(calender.add_project_optimal_position(p))
+    print(calendar.recompute_deadline_setting_changed())
 
     # p = Project('a', 10)
     # calender.add_new_project(calender.projects, p, True)
