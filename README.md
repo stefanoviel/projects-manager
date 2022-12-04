@@ -1,4 +1,4 @@
-# projects-manager
+# Projects-manager
 
 It's a simple command line tool that allows to schedule tasks and increase productivity. 
 
